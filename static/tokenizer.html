@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tiktoken Web Interface cl100k_base</title>
+    <meta property="og:title" content="Tiktoken Web Interface cl100k_base" />
+    <meta property="og:description" content="A web interface for tokenizing text using Tiktoken." />
+    <meta property="og:image" content="https://foxabilo.com/screenshot1.png" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        #input-area,
+        #output-area {
+            width: 75%;
+            height: 45%;
+            overflow: auto;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        textarea {
+            width: 95%;
+            height: 90%;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+            /* Disable resizing */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        span {
+            color: black;
+            padding: 2px;
+        }
+
+        #controls {
+            display: flex;
+            justify-content: space-between;
+            width: 75%;
+        }
+
+        #token-count {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #title {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        #tokens {
+            white-space: pre-wrap;
+            /* Enable text wrapping */
+        }
+    </style>
+    <script>
+        
+        window.onload = function () {
+            const pastelColors = [
+                '#FFB347',  // Pastel orange
+                '#FFCC99',  // Peach
+                '#FFFF66',  // Pastel yellow
+                '#64fa64',  // Tea green
+                '#CCFFCC',  // Aero blue
+                '#CB99C9',  // Thistle
+                '#FFB6C1',  // Light pink
+                '#FFCCDD',  // Pink lace
+                '#CCCCFF'   // Lavender blue
+            ];
+
+            let lastColor = null;
+            let tokenizedData = [];
+            let tokenColors = new Map();  // Store token-color pairs
+
+            function getColorForToken(token) {
+                let color;
+                let lastToken = tokenColors.get("lastToken");
+
+                if (tokenColors.has(token) && token !== lastToken) {
+                    color = tokenColors.get(token);
+                } else {
+                    do {
+                        color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+                    } while (color === lastColor);
+                }
+
+                lastColor = color;
+                tokenColors.set("lastToken", token);
+                tokenColors.set(token, color);
+
+                return color;
+            }
+
+
+            async function tokenize() {
+                const text = document.getElementById('text').value;
+                // Limit to ~1MB of text
+                if (new Blob([text]).size > 10000000) {
+                    alert("Text is too large. Please limit to 10MB of text.");
+                    return;
+                }
+                const response = await fetch('/tokenize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+                const data = await response.json();
+                tokenizedData = data.tokenized_text;
+                displayOutput();
+            }
+
+            function displayOutput() {
+                if (isColorized) {
+                    displayColorizedText();
+                } else {
+                    displayTokenValues();
+                }
+            }
+
+            function displayColorizedText() {
+                const tokensElement = document.getElementById('tokens');
+                tokensElement.innerHTML = '';
+                tokenizedData.forEach((item) => {
+                    const span = document.createElement('span');
+                    span.style.backgroundColor = getColorForToken(item.token);
+                    span.innerText = item.text;
+                    tokensElement.appendChild(span);
+                });
+                document.getElementById('token-count').innerText = `Token count: ${tokenizedData.length}`;
+            }
+
+            function displayTokenValues() {
+                const tokensElement = document.getElementById('tokens');
+                tokensElement.innerHTML = '';
+                tokenizedData.forEach((item) => {
+                    const span = document.createElement('span');
+                    span.innerText = item.token + " "; // Add a space after each token
+                    span.style.backgroundColor = getColorForToken(item.token);
+                    tokensElement.appendChild(span);
+                });
+                document.getElementById('token-count').innerText = `Token count: ${tokenizedData.length}`;
+            }
+
+            const toggleButton = document.getElementById('toggle-btn');
+            let isColorized = true;
+
+            toggleButton.onclick = function () {
+                isColorized = !isColorized;
+                if (isColorized) {
+                    toggleButton.innerText = "Show Token IDs";
+                } else {
+                    toggleButton.innerText = "Show Colorized Text";
+                }
+                displayOutput();
+            };
+
+            document.getElementById('token-count').innerText = `Token count: 0`;
+
+            // Add event listener for 'input' event
+            document.getElementById('text').addEventListener('input', function () {
+                tokenize();  // Tokenize input whenever it changes
+            });
+        };
+    </script>
+</head>
+
+<body>
+    <div id="title">Tiktoken Web Interface cl100k_base</div>
+    <div id="input-area">
+        <textarea id="text"></textarea>
+    </div>
+    <div id="controls">
+        <button id="toggle-btn">Show Token IDs</button>
+        <p id="token-count"></p>
+    </div>
+    <div id="output-area">
+        <p id="tokens"></p>
+    </div>
+</body>
+
+</html>

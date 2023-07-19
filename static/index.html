@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tiktoken Web Interface cl100k_base</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 100vh;
+                background-color: #f0f0f0;
+            }
+            #input-area, #output-area {
+                width: 75%;
+                height: 45%;
+                overflow: auto;
+                margin: 20px 0;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                background-color: white;
+                border-radius: 5px;
+            }
+            textarea {
+                width: 95%;
+                height: 90%;
+                padding: 10px;
+                font-size: 16px;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+                margin: 10px;
+                cursor: pointer;
+                background-color: #007BFF;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            span {
+                color: black;
+                padding: 2px;
+            }
+            #controls {
+                display: flex;
+                justify-content: space-between;
+                width: 75%;
+            }
+            #token-count {
+                font-weight: bold;
+                margin-top: 10px;
+            }
+            #title {
+                font-size: 24px;
+                margin-top: 20px;
+            }
+        </style>
+        <script>
+        window.onload = function() {
+            const pastelColors = [
+                '#FFB347',  // Pastel orange
+                '#FFCC99',  // Peach
+                '#FFFF66',  // Pastel yellow
+                '#99FF99',  // Tea green
+                '#CCFFCC',  // Aero blue
+                '#CB99C9',  // Thistle
+                '#FFB6C1',  // Light pink
+                '#FFCCDD',  // Pink lace
+                '#CCCCFF'   // Lavender blue
+                // You can add more colors
+            ];
+            let lastColor = null;
+            let tokenizedData = [];
+
+            function getRandomColor() {
+                if (pastelColors.length === 1) {
+                    // If there is only one color, always return it
+                    return pastelColors[0];
+                }
+
+                let color;
+                do {
+                    color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+                } while (color === lastColor);
+                
+                lastColor = color;
+                return color;
+            }
+
+            async function tokenize() {
+                const text = document.getElementById('text').value;
+                const response = await fetch('/tokenize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({text: text})
+                });
+                const data = await response.json();
+                tokenizedData = data.tokenized_text;
+                displayColorizedText();
+            }
+
+            function displayColorizedText() {
+                const tokensElement = document.getElementById('tokens');
+                tokensElement.innerHTML = '';
+                tokenizedData.forEach((item) => {
+                    const span = document.createElement('span');
+                    span.style.backgroundColor = getRandomColor();
+                    span.innerText = item.text;
+                    tokensElement.appendChild(span);
+                });
+                document.getElementById('token-count').innerText = `Token count: ${tokenizedData.length}`;
+            }
+
+            function displayTokenValues() {
+                const tokensElement = document.getElementById('tokens');
+                tokensElement.innerHTML = '';
+                tokenizedData.forEach((item) => {
+                    const span = document.createElement('span');
+                    span.innerText = item.token;
+                    span.style.backgroundColor = getRandomColor();  // Add this line
+                    tokensElement.appendChild(span);
+                });
+                document.getElementById('token-count').innerText = `Token count: ${tokenizedData.length}`;
+            }
+            const toggleButton = document.getElementById('toggle-btn');
+            let isColorized = false;
+
+            toggleButton.onclick = function() {
+                if (isColorized) {
+                    displayTokenValues();
+                    toggleButton.innerText = "Display Colorized Text";
+                } else {
+                    tokenize();
+                    toggleButton.innerText = "Display Token Values";
+                }
+                isColorized = !isColorized;
+            };
+            document.getElementById('token-count').innerText = `Token count: 0`;
+            document.getElementById('text').addEventListener('input', function() {
+        // When the input changes, revert the button text back to "Tokenize and Display Colorized Text"
+        toggleButton.innerText = "Tokenize and Display Colorized Text";
+
+        // Also, reset the isColorized flag
+        isColorized = false;
+    });
+};
+</script>
+    </head>
+    <body>
+        <div id="title">Tiktoken Web Interface cl100k_base</div>
+        <div id="input-area">
+            <textarea id="text"></textarea>
+        </div>
+        <div id="controls">
+            <button id="toggle-btn">Tokenize and Display Colorized Text</button>
+            <p id="token-count"></p>
+        </div>
+        <div id="output-area">
+            <p id="tokens"></p>
+        </div>
+    </body>
+</html>
