@@ -1,170 +1,313 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Tiktoken Web Interface cl100k_base</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                height: 100vh;
-                background-color: #f0f0f0;
-            }
-            #input-area, #output-area {
-                width: 75%;
-                height: 45%;
-                overflow: auto;
-                margin: 20px 0;
-                padding: 20px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                background-color: white;
-                border-radius: 5px;
-            }
-            textarea {
-                width: 95%;
-                height: 90%;
-                padding: 10px;
-                font-size: 16px;
-            }
-            button {
-                padding: 10px 20px;
-                font-size: 16px;
-                margin: 10px;
-                cursor: pointer;
-                background-color: #007BFF;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            button:hover {
-                background-color: #0056b3;
-            }
-            span {
-                color: black;
-                padding: 2px;
-            }
-            #controls {
-                display: flex;
-                justify-content: space-between;
-                width: 75%;
-            }
-            #token-count {
-                font-weight: bold;
-                margin-top: 10px;
-            }
-            #title {
-                font-size: 24px;
-                margin-top: 20px;
-            }
-        </style>
-        <script>
-        window.onload = function() {
-            const pastelColors = [
-                '#FFB347',  // Pastel orange
-                '#FFCC99',  // Peach
-                '#FFFF66',  // Pastel yellow
-                '#99FF99',  // Tea green
-                '#CCFFCC',  // Aero blue
-                '#CB99C9',  // Thistle
-                '#FFB6C1',  // Light pink
-                '#FFCCDD',  // Pink lace
-                '#CCCCFF'   // Lavender blue
-                // You can add more colors
-            ];
-            let lastColor = null;
-            let tokenizedData = [];
+<html lang="en">
 
-            function getRandomColor() {
-                if (pastelColors.length === 1) {
-                    // If there is only one color, always return it
-                    return pastelColors[0];
-                }
+<head>
+    <meta charset="utf-8">
+    <title>foxalabs.com Development - Home</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="./css/style.css" rel="stylesheet">
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+</head>
 
-                let color;
-                do {
-                    color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
-                } while (color === lastColor);
+<body class="font-inter antialiased bg-white text-gray-800 tracking-tight">
+
+    <!-- Page wrapper -->
+    <div class="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
+
+        <!-- Site header -->
+        <header class="absolute w-full z-30">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="flex items-center justify-between h-16 md:h-20">
+
+<!-- Site branding -->
+<div class="shrink-0 mr-4">
+    <!-- Logo -->
+    <a class="block group" href="/" aria-label="foxalabs.com">
+        <img src="./images/foxa_labs-curves.svg" alt="foxalabs.com Logo" width="200" height="150">
+    </a>
+</div>
+                    <!-- Desktop navigation -->
+                    <nav class="flex grow">
+
+
+                        
+
+
+                        
+
+<!-- Calendly link widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<a href="" class="calendly-button" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/spencer_bentley/30min'});return false;">Book a call</a>
+<!-- Calendly link widget end -->
+
+
+
+
+                        
+
+                    </nav>
+
+                </div>
+            </div>
+        </header>
+
+        <!-- Page content -->
+        <main class="grow">
+
+            <!-- Hero -->
+            <section class="relative overflow-hidden">
+
+                <!-- Bg -->
+                <div class="absolute inset-0 bg-gradient-to-b from-indigo-100 to-white pointer-events-none -z-10" aria-hidden="true"></div>
+
+                <!-- Illustration -->
+                <div class="hidden md:block absolute left-1/2 -translate-x-1/2 pointer-events-none -z-10" aria-hidden="true">
+                    <img src="./images/hero-illustration.svg" class="max-w-none" width="1440" height="749" alt="Hero Illustration">
+                </div>
+
+                <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                    <div class="pt-28 pb-8 md:pt-36 md:pb-16">
+
+                        <!-- Hero content -->
+                        <div class="max-w-3xl text-center md:text-left">
+
+                            
+
+<!-- Hero content -->
+<div class="max-w-3xl text-center md:text-left">
+
+    <!-- Copy -->
+    <h1 class="h1 font-inter mb-6">AI Consulting & <span class="font-nycd text-orange-500 font-normal">Development</span></h1>
+    <p class="text-lg text-gray-500 mb-8">We are a team of passionate experts who live and breathe Large Language Models (LLMs), Retrieval Augmented Generation (RAG), Vector Search, AI integration, and all things hardware and firmware.</p> 
+        
+    <p class="text-lg text-gray-500 mb-8">Our friendly, close-knit team is here to help you make sense of Artificial Intelligence. With a genuine, down-to-earth approach, we'll make your projects shine in today's digital environment.</p>
+    
+    <!-- Button + Avatars -->
+    <div class="sm:flex sm:items-center sm:justify-center md:justify-start space-y-6 sm:space-y-0 sm:space-x-5">
+        <div>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+                            <div>    
+                    </div>
+            </section>
+
+            <!-- Press logos -->
+            <section>
+                <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                    <div class="py-6 lg:py-4 border-b border-gray-200">
+            
+                        <!-- Items -->
+                        <div class="flex flex-wrap items-center justify-around text-center">
+
+                            <!-- Trusted by -->
+                            <div class="w-full lg:w-auto py-3 px-2 lg:py-2">
+                                <div class="font-nycd text-2xl text-indigo-500 whitespace-nowrap">Our Expertise</div>
+                            </div>
+            
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/Python-Logo-1.svg" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 mb-2 flex items-center justify-center">
+    <img src="./images/llama_index_logo.png" alt="Logo" class="max-w-full" width="135" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/langchain_transparent.png" alt="Logo" class="max-w-full" width="130" height="30">
+</div>
+              
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 mb-1 flex items-center justify-center">
+    <img src="./images/pinecone.png" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/chromadb.svg" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/fastapi.png" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/huggingface.svg" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/Azure.svg" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/openai-lockup.svg" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/Gemini-Logo.png" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/mistral.webp" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/anthropic-seeklogo.svg" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+
+<!-- Item -->
+<div class="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2 flex items-center justify-center">
+    <img src="./images/llama2.png" alt="Logo" class="max-w-full" width="114" height="22">
+</div>
+            
+                        </div>
+            
+                    </div>
+                </div
+
+                    
+
+
+
+                    
+<!-- Page content -->
+<section>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="py-8 md:py-16">
+            <div class="md:flex md:justify-between md:gap-4">
                 
-                lastColor = color;
-                return color;
+                <!-- Newsletter CTA -->
+                <div class="py-4 border-b border-gray-200 md:w-1/2">
+                    <div class="relative text-center px-4 py-6 group">
+                        <div class="absolute inset-0 rounded-xl bg-gray-50 border border-gray-200 transition duration-150 ease-in-out -z-10" aria-hidden="true"></div>
+                        <div class="font-nycd text-xl text-indigo-500 mb-1">Contact Us</div>
+                        <div class="text-2xl font-bold mb-5"></div>
+                        <form id="newsletterForm" class="justify-center items-center">
+                            <div class="flex flex-col w-full mb-4">
+                                <!-- Email Input -->
+                                <input type="email" name="email" class="form-input w-full py-1.5 mb-4" placeholder="Your email" aria-label="Your email" required />
+                                <!-- Message Textarea -->
+                                <textarea name="message" class="form-input w-full py-1.5 mb-4" placeholder="Your message" aria-label="Your message" required rows="4"></textarea>
+                            </div>
+                            <button class="btn-sm text-white bg-indigo-500 hover:bg-indigo-600 shadow-sm" type="submit">Contact Us</button>
+                            <div class="flex items-center justify-start mt-4">
+                                <input type="checkbox" id="tos" name="tos" required class="form-checkbox h-4 w-4 text-indigo-500 mr-2">
+                                <label for="tos" class="text-sm">I accept the <a href="tos.html" target="_blank" class="underline">Terms of Service</a></label>
+                            </div>
+                        </form>                        
+                        <div id="successMessage" class="mt-4 text-emerald-600" style="display:none;">
+                            Thanks for contacting us!
+                        </div>
+                    </div>
+                </div>
+
+                
+<!-- Contact Us -->
+<div class="py-8 md:w-1/2">
+    <div class="text-center px-4 py-6">
+        <div class="font-nycd text-2xl text-indigo-500 mb-1">Or Email Us</div>
+        <div class="text-xl font-bold mb-5">info@foxalabs.com</div>
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+    </section>
+
+
+
+                
+
+                
+</main>
+
+        <!-- Site footer -->
+        <footer>
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="py-8 md:py-12">
+
+<!-- Top area -->
+<div class="flex flex-col md:flex-row items-center justify-center md:justify-between mb-4 md:mb-6">
+    <div class="shrink-0 mr-4">
+        <!-- Logo -->
+    </div>
+</div>
+
+                    <!-- Bottom area -->
+                    <div class="text-center md:flex md:items-center md:justify-between">
+                    
+                        <!-- Left links -->
+                        <div class="text-sm font-medium md:order-1 mb-2 md:mb-0">
+                            <ul class="inline-flex flex-wrap text-sm font-medium">
+                                <li class="after:content-['·'] last:after:hidden after:text-gray-400 after:px-2">
+                                    <a class="text-gray-500 hover:text-gray-500 hover:underline" href="tos.html" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Copyright -->
+                        <div class="text-sm text-gray-500">foxalabs.com | All rights reserved</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="./js/vendors/alpinejs.min.js" defer></script>
+    <script src="./js/main.js"></script>
+
+<script>
+    document.getElementById('newsletterForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Collect form data
+        let formData = new FormData(this);
+
+        // Send the form data using the fetch API
+        fetch('https://formspree.io/f/mkndqyrj', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
             }
-
-            async function tokenize() {
-                const text = document.getElementById('text').value;
-                const response = await fetch('/tokenize', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({text: text})
-                });
-                const data = await response.json();
-                tokenizedData = data.tokenized_text;
-                displayColorizedText();
+        })
+        .then(response => {
+            if (response.status === 200 || response.status === 201) {
+                // Hide the form and display a success message
+                document.getElementById('newsletterForm').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+            } else {
+                alert('There was an error submitting your form. Please try again later.');
             }
-
-            function displayColorizedText() {
-                const tokensElement = document.getElementById('tokens');
-                tokensElement.innerHTML = '';
-                tokenizedData.forEach((item) => {
-                    const span = document.createElement('span');
-                    span.style.backgroundColor = getRandomColor();
-                    span.innerText = item.text;
-                    tokensElement.appendChild(span);
-                });
-                document.getElementById('token-count').innerText = `Token count: ${tokenizedData.length}`;
-            }
-
-            function displayTokenValues() {
-                const tokensElement = document.getElementById('tokens');
-                tokensElement.innerHTML = '';
-                tokenizedData.forEach((item) => {
-                    const span = document.createElement('span');
-                    span.innerText = item.token;
-                    span.style.backgroundColor = getRandomColor();  // Add this line
-                    tokensElement.appendChild(span);
-                });
-                document.getElementById('token-count').innerText = `Token count: ${tokenizedData.length}`;
-            }
-            const toggleButton = document.getElementById('toggle-btn');
-            let isColorized = false;
-
-            toggleButton.onclick = function() {
-                if (isColorized) {
-                    displayTokenValues();
-                    toggleButton.innerText = "Display Colorized Text";
-                } else {
-                    tokenize();
-                    toggleButton.innerText = "Display Token Values";
-                }
-                isColorized = !isColorized;
-            };
-            document.getElementById('token-count').innerText = `Token count: 0`;
-            document.getElementById('text').addEventListener('input', function() {
-        // When the input changes, revert the button text back to "Tokenize and Display Colorized Text"
-        toggleButton.innerText = "Tokenize and Display Colorized Text";
-
-        // Also, reset the isColorized flag
-        isColorized = false;
+        })
+        .catch(error => {
+            alert('There was an error submitting your form. Please try again later.');
+        });
     });
-};
 </script>
-    </head>
-    <body>
-        <div id="title">Tiktoken Web Interface cl100k_base</div>
-        <div id="input-area">
-            <textarea id="text"></textarea>
-        </div>
-        <div id="controls">
-            <button id="toggle-btn">Tokenize and Display Colorized Text</button>
-            <p id="token-count"></p>
-        </div>
-        <div id="output-area">
-            <p id="tokens"></p>
-        </div>
-    </body>
+
+</body>
+
 </html>
